@@ -1,49 +1,236 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول - برق</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- CSS Style --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            padding: 40px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* الجزء الخاص بالشعار (الصورة) */
+        .logo-section {
+            margin-top: 60px;
+            margin-bottom: 30px;
+        }
+
+        .sparkle-logo {
+            width: 80px; /* يمكنك التحكم في عرض الصورة من هنا */
+            height: auto; /* يحافظ على تناسق الطول والعرض */
+            display: block;
+        }
+
+        /* النصوص */
+        .welcome-text h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .welcome-text p {
+            color: #777;
+            font-size: 16px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* حقل إدخال رقم الجوال */
+        .input-group {
+            width: 100%;
+            border: 2px solid #FFD700; /* اللون الأصفر المميز */
+            border-radius: 18px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            flex-direction: row-reverse;
+            transition: border-color 0.3s;
+        }
+
+        .country-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-right: 10px;
+            border-right: 1px solid #eee;
+            margin-right: 12px;
+        }
+
+        .flag-icon {
+            width: 28px;
+            height: 20px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+
+        .arrow-down {
+            font-size: 10px;
+            color: #ccc;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+        }
+
+        .input-wrapper label {
+            font-size: 11px;
+            color: #bbb;
+            margin-bottom: 2px;
+        }
+
+        .input-wrapper input {
+            border: none;
+            outline: none;
+            font-size: 18px;
+            color: #333;
+            background: transparent;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        /* رمز الدعوة */
+        .referral-section {
+            margin-top: 30px;
+        }
+
+        .referral-section a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        /* الجزء السفلي */
+        .bottom-section {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding-bottom: 30px;
+        }
+
+        .terms-text {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .terms-text span {
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* زر الاستمرار */
+        .btn-continue {
+            width: 100%;
+            padding: 16px;
+            border-radius: 18px;
+            border: none;
+            background-color: #EAEAEA;
+            color: #B0B0B0;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: not-allowed;
+            transition: all 0.3s ease;
+        }
+
+        .btn-continue.active {
+            background-color: #000;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="logo">
-            <div class="sparkle-icon">✦</div>
+    <div class="app-container">
+        <div class="logo-section">
+            <img src="barq.png" alt="barq" class="sparkle-logo" id="logoImg">
         </div>
 
-        <div class="header-text">
+        <div class="welcome-text">
             <h1>هلا فيك في برق</h1>
             <p>الرجاء إدخال رقم الجوال</p>
         </div>
 
-        <div class="input-container">
-            <div class="phone-input-wrapper">
-                <div class="country-code">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg" alt="SA Flag" class="flag">
-                    <span class="dropdown-arrow">▼</span>
-                </div>
-                <div class="input-field">
-                    <label>رقم الجوال</label>
-                    <input type="tel" placeholder="05" id="phoneInput">
-                </div>
+        <div class="input-group">
+            <div class="country-selector">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg" alt="SA" class="flag-icon">
+                <span class="arrow-down">▼</span>
+            </div>
+            <div class="input-wrapper">
+                <label>رقم الجوال</label>
+                <input type="tel" id="phoneInput" placeholder="05" dir="ltr" maxlength="10">
             </div>
         </div>
 
-        <div class="referral-link">
+        <div class="referral-section">
             <a href="#">رمز دعوة من صديق؟</a>
         </div>
 
-        <div class="footer">
-            <p class="terms">
+        <div class="bottom-section">
+            <p class="terms-text">
                 من خلال الاستمرار فإنك توافق على <br>
-                <a href="#">الشروط والأحكام</a> و <a href="#">سياسات خصوصية البيانات</a>
+                <span>الشروط والأحكام</span> و <span>سياسات خصوصية البيانات</span>
             </p>
-            <button id="submitBtn" class="continue-btn" disabled>استمرار</button>
+            <button id="submitBtn" class="btn-continue" disabled>استمرار</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const phoneInput = document.getElementById('phoneInput');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // منطق تفعيل الزر عند الكتابة
+        phoneInput.addEventListener('input', () => {
+            // يتفعل الزر إذا تم إدخال 9 أرقام أو أكثر
+            if (phoneInput.value.trim().length >= 9) {
+                submitBtn.classList.add('active');
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.classList.remove('active');
+                submitBtn.disabled = true;
+            }
+        });
+
+        // منع إدخال أي شيء غير الأرقام
+        phoneInput.addEventListener('keypress', (e) => {
+            if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+
 </body>
 </html>
