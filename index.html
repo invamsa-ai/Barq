@@ -62,7 +62,7 @@
             text-align: center;
         }
 
-        /* حقل إدخال رقم الجوال - تم تعديله ليصبح من اليمين لليسار */
+        /* حقل إدخال رقم الجوال */
         .input-group {
             width: 100%;
             border: 2px solid #FFD700; 
@@ -70,7 +70,7 @@
             padding: 10px 15px;
             display: flex;
             align-items: center;
-            flex-direction: row; /* تم التعديل ليتماشى مع RTL */
+            flex-direction: row;
             transition: border-color 0.3s;
         }
 
@@ -78,8 +78,8 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding-left: 10px; /* مسافة بعد العلم */
-            border-left: 1px solid #eee; /* الخط الفاصل على اليسار */
+            padding-left: 10px;
+            border-left: 1px solid #eee;
             margin-left: 12px;
         }
 
@@ -115,7 +115,7 @@
             color: #333;
             background: transparent;
             font-weight: 500;
-            text-align: right; /* محاذاة النص داخل الحقل لليمين */
+            text-align: right;
         }
 
         /* رمز الدعوة */
@@ -214,6 +214,7 @@
         const phoneInput = document.getElementById('phoneInput');
         const submitBtn = document.getElementById('submitBtn');
 
+        // منطق تفعيل الزر عند الكتابة
         phoneInput.addEventListener('input', () => {
             if (phoneInput.value.trim().length >= 9) {
                 submitBtn.classList.add('active');
@@ -224,13 +225,23 @@
             }
         });
 
+        // منع إدخال أي شيء غير الأرقام
         phoneInput.addEventListener('keypress', (e) => {
             if (!/[0-9]/.test(e.key)) {
                 e.preventDefault();
+            }
+        });
+
+        // إضافة حدث عند الضغط على الزر
+        submitBtn.addEventListener('click', () => {
+            if (!submitBtn.disabled) {
+                // حفظ الرقم في localStorage
+                localStorage.setItem('userPhone', phoneInput.value);
+                // الانتقال لصفحة otp
+                window.location.href = 'otp.html';
             }
         });
     </script>
 
 </body>
 </html>
-
