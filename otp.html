@@ -12,7 +12,7 @@
         
         /* تنسيق الأيقونة */
         .icon-container { margin-bottom: 30px; display: flex; justify-content: center; }
-        .sparkle-icon { width: 250px; height: auto; } /* قم بتغيير barq-icon.png لاسم صورتك */
+        .sparkle-icon { width: 250px; height: auto; } 
 
         h1 { font-size: 22px; margin-bottom: 10px; color: #000; }
         p { color: #555; margin-bottom: 30px; font-size: 14px; }
@@ -22,7 +22,22 @@
         .otp-box { width: 45px; height: 55px; border: none; border-radius: 10px; background-color: #f2f2f2; text-align: center; font-size: 20px; outline: none; transition: 0.3s; }
         .otp-box:focus { background-color: #eee; border: 2px solid #FFD700; }
         
-        .resend { color: #888; font-size: 14px; margin-top: 20px; }
+        .resend { color: #888; font-size: 14px; margin-top: 20px; line-height: 1.8; }
+        
+        /* تنسيق الرابط عند التعطيل وبعد التفعيل */
+        #resendLink {
+            color: #ccc;
+            font-weight: bold;
+            text-decoration: none;
+            pointer-events: none; /* يمنع الضغط */
+            transition: 0.3s;
+        }
+        
+        #resendLink.available {
+            color: #000;
+            pointer-events: auto; /* يسمح بالضغط */
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -46,18 +61,55 @@
 
     <div class="resend">
         لم تحصل على رمز؟ <br>
-        <a href="#" style="color: #000; font-weight: bold; text-decoration: none;">إعادة إرسال الرمز في 56</a>
+        <a href="javascript:void(0)" id="resendLink">إعادة إرسال الرمز في <span id="timer">60</span></a>
     </div>
 </div>
 
 <script>
-    // 1. عرض الرقم الذي تم جلبه من الصفحة السابقة
+    // 1. عرض الرقم المخزن
     const phone = localStorage.getItem('userPhone');
     if(phone) {
         document.getElementById('displayPhone').innerText = phone;
     }
 
-    // 2. منطق التنقل التلقائي بين المربعات
+    // 2. منطق العداد التنازلي
+    let timeLeft = 60; // عدد الثواني
+    const timerElement = document.getElementById('timer');
+    const resendLink = document.getElementById('resendLink');
+
+    function startTimer() {
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timerElement.innerText = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                resendLink.innerHTML = "إعادة إرسال الرمز الآن";
+                resendLink.classList.add('available');
+            }
+        }, 1000);
+    }
+
+    // تشغيل العداد عند فتح الصفحة
+    startTimer();
+
+    // حدث عند الضغط على إعادة الإرسال (بعد تفعيله)
+    resendLink.addEventListener('click', () => {
+        if(resendLink.classList.contains('available')) {
+            alert("تم إعادة إرسال الرمز!");
+            // إعادة ضبط العداد
+            timeLeft = 60;
+            resendLink.classList.remove('available');
+            resendLink.innerHTML = 'إعادة إرسال الرمز في <span id="timer">60</span>';
+            // إعادة تشغيل العداد
+            // ملاحظة: نحتاج لإعادة تعريف timerElement لأننا غيرنا الـ innerHTML
+            setTimeout(() => {
+                location.reload(); // أسهل طريقة لإعادة تشغيل العداد بالكامل
+            }, 500);
+        }
+    });
+
+    // 3. التنقل التلقائي بين المربعات
     const inputs = document.querySelectorAll('.otp-box');
     inputs.forEach((input, index) => {
         input.addEventListener('input', (e) => {
@@ -67,7 +119,6 @@
             }
         });
         
-        // دعم المسح للخلف
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Backspace' && input.value === '' && index > 0) {
                 inputs[index - 1].focus();
