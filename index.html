@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - برق</title>
+    
+    <title>تسجيل الدخول - برق | أسرع خدمة توصيل</title>
+    <meta name="description" content="سجل دخولك في تطبيق برق واستمتع بتجربة توصيل سريعة وموثوقة. أدخل رقم جوالك للبدء.">
+    <meta name="keywords" content="برق, توصيل, تسجيل دخول برق, تطبيق برق, خدمات توصيل">
+    <meta name="author" content="Barq App">
+
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffffff">
+
     <style>
         /* --- CSS Style --- */
         * {
@@ -34,7 +45,7 @@
             position: relative;
         }
 
-        /* الجزء الخاص بالشعار (الصورة) */
+        /* الشعار */
         .logo-section {
             margin-top: 60px;
             margin-bottom: 30px;
@@ -62,7 +73,7 @@
             text-align: center;
         }
 
-        /* حقل إدخال رقم الجوال */
+        /* حقل الإدخال */
         .input-group {
             width: 100%;
             border: 2px solid #FFD700; 
@@ -118,7 +129,7 @@
             text-align: right;
         }
 
-        /* رمز الدعوة */
+        /* روابط وأزرار */
         .referral-section {
             margin-top: 30px;
             width: 100%;
@@ -132,7 +143,6 @@
             font-size: 15px;
         }
 
-        /* الجزء السفلي */
         .bottom-section {
             margin-top: auto;
             width: 100%;
@@ -152,7 +162,6 @@
             font-weight: bold;
         }
 
-        /* زر الاستمرار */
         .btn-continue {
             width: 100%;
             padding: 16px;
@@ -177,7 +186,7 @@
 
     <div class="app-container">
         <div class="logo-section">
-            <img src="barq.png" alt="barq" class="sparkle-logo" id="logoImg">
+            <img src="barq.png" alt="شعار تطبيق برق" class="sparkle-logo" id="logoImg">
         </div>
 
         <div class="welcome-text">
@@ -214,7 +223,7 @@
         const phoneInput = document.getElementById('phoneInput');
         const submitBtn = document.getElementById('submitBtn');
 
-        // منطق تفعيل الزر عند الكتابة
+        // منطق تفعيل الزر عند الإدخال
         phoneInput.addEventListener('input', () => {
             if (phoneInput.value.trim().length >= 9) {
                 submitBtn.classList.add('active');
@@ -225,19 +234,17 @@
             }
         });
 
-        // منع إدخال أي شيء غير الأرقام
+        // منع إدخال غير الأرقام
         phoneInput.addEventListener('keypress', (e) => {
             if (!/[0-9]/.test(e.key)) {
                 e.preventDefault();
             }
         });
 
-        // إضافة حدث عند الضغط على الزر
+        // حفظ الرقم والانتقال لصفحة التحقق
         submitBtn.addEventListener('click', () => {
             if (!submitBtn.disabled) {
-                // حفظ الرقم في localStorage
                 localStorage.setItem('userPhone', phoneInput.value);
-                // الانتقال لصفحة otp
                 window.location.href = 'otp.html';
             }
         });
